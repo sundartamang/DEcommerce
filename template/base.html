@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Shopmandu</title>
+    {% block extra_head %}
+	{% endblock %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'https://use.fontawesome.com/releases/v5.11.2/css/all.css' %}">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+        {% block header %}{% include 'header.html' %}{% endblock %}
+    <!-- Navbar -->
+    <!--Carousel Wrapper-->
+    <!--/.Carousel Wrapper-->
+
+
+    <!--Main layout-->
+        <div class="container mt-5 pt-4" style="height: auto; min-height:370px">
+            {% block body %}
+
+            {% endblock %}
+            {% block extra_body %}
+	
+            {% endblock %}
+        </div>
+    <!--Main layout-->
+
+    <!--Footer-->
+        {% block footer %}{% include 'footer.html' %}{% endblock %}
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+    </script>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+    <script>
+        var user = "{{request.user}}"
+        //get csrftoken function
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+        //getcookies function
+        function getCookie(name){
+            var cookieArr = document.cookie.split(";")
+                for(var i=0; i<cookieArr.length; i++){
+                    var cookiePair = cookieArr[i].split("=")
+                    if(name ==  cookiePair[0].trim()){
+                        return decodeURIComponent(cookiePair[1])
+                }
+            }
+            return null
+        }
+        var cart = JSON.parse(getCookie('cart'))
+        if(cart == undefined){
+            cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log("Cart : ",cart)
+    </script>
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
+</body>
+</html>

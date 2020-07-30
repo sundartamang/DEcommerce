@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container-fluid">
+
+        <!-- Brand -->
+        <a class="navbar-brand waves-effect" href="/">
+            <strong class="blue-text">Home</strong>
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if messages %}
+            <div class="container mr-auto" style="width:430px;">
+                {% for message in messages %}
+                <br>
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span area-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Right -->
+            <ul class="navbar-nav nav-flex-icons ml-auto">            
+                <!-- user authenticatication -->
+                
+                <li class="nav-item" >
+                    <a class="nav-link waves-effect" href="{% url 'store:cart' %}">
+                        {% if cart_items %}
+                        <span class="badge red z-depth-1"> {{cart_items}} </span>
+                        {% else %}
+                        <span class="badge red z-depth-1 ml-5"> 0 </span>
+                        {% endif %}
+                        <img class=""  id="cart-icon" src="{% static 'img/cart.png' %}">
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
